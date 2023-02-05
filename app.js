@@ -20,7 +20,7 @@ const helmet = require("helmet");
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
-dbUrl = "mongodb://localhost:27017/yelp-camp";
+dbUrl = process.env.db_url || "mongodb://localhost:27017/yelp-camp";
 
 main().catch((err) => console.log(`mongo connection error ${err}`));
 async function main() {
@@ -126,6 +126,7 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  console.log(res.locals.currentUser);
   next();
 });
 
